@@ -1,20 +1,13 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     height: 90vh;
+    background: whitesmoke;
 }
 
 button {
-    color: #e6f9c4;
-    background: #80c1b9;
     border: none;
     outline: none;
-    box-shadow: 0 0 3px 3px #888;
-}
-
-button:hover {
-    box-shadow: 0 0 1px 1px #666;
-    filter: brightness(1.1);
-    transition: 0.2s;
+    cursor: pointer;
 }
 
 .header {
@@ -25,7 +18,7 @@ button:hover {
 
 .header-title {
     text-align: center;
-    color: #01240e;
+    color: #024b1d;
     margin: auto;
     font-size: 8em;
 }
@@ -48,6 +41,15 @@ button:hover {
     height: 100%;
     font-size: 4em;
     transition: all 0.5s;
+    color: #e6f9c4;
+    background: #80c1b9;
+    box-shadow: 0 0 3px 3px #888;
+}
+
+.index-container>button:hover {
+    box-shadow: 0 0 1px 1px #666;
+    filter: brightness(1.1);
+    transition: 0.2s;
 }
 
 .index-container>button span {
@@ -71,10 +73,104 @@ button:hover {
     transition: 0.5s;
 }
 
-.index-container>.play-button span:after {
+.index-container>.start-button span:after {
     content: '\27be';
 }
 
 .index-container>.how-to-button span:after {
     content: '\2754';
+}
+
+.setup-container {
+    display: flex;
+    justify-content: space-around;
+    height: 30%;
+}
+
+.setup-container button {
+    grid-area: ok-button;
+    background: white;
+    border: solid 2px #80c1b9;
+    transition: 0.5s;
+}
+
+.setup-container button:hover {
+    background: #80c1b9;
+}
+
+.player {
+    display: grid;
+    grid-template-columns: 1 1 1;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "title title title"
+        "name-input name-input ok-button"
+        "control control control";
+    grid-column-gap: 10px;
+    grid-row-gap: 5px;
+}
+
+.player>.player-title {
+    grid-area: title;
+    color: #024b1d;
+    font-size: 4em;
+    margin: 0;
+    text-align: center;
+}
+
+.player>input {
+    grid-area: name-input;
+    font-size: 200%;
+    outline: none;
+    border: solid 3px #bbb;
+    padding: 1%;
+    transition: 0.3s;
+}
+
+.player>input:focus {
+    border: solid 3px #80c1b9;
+}
+
+.player>.control-button {
+    grid-area: control;
+}
+
+.play-button {
+    height: 50%;
+    width: 20%;
+    margin-top: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
