@@ -50,24 +50,31 @@ button:hover {
     transition: all 0.5s;
 }
 
-.play-button span {
+.index-container>button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.5s;
 }
 
-.play-button span:after {
-    content: '&#8680';
+.index-container>button:hover span {
+    padding-right: 25px;
+}
+
+.index-container>button:hover span:after {
+    opacity: 1;
+}
+
+.index-container>button span:after {
     position: absolute;
     opacity: 0;
     transition: 0.5s;
 }
 
-.play-button:hover span {
-    padding-right: 25px;
+.index-container>.play-button span:after {
+    content: '\27be';
 }
 
-.play-button:hover span:after {
-    opacity: 1;
+.index-container>.how-to-button span:after {
+    content: '\2754';
 }
