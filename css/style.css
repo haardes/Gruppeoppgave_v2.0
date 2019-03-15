@@ -24,15 +24,40 @@ button {
 }
 
 .header>button {
+    display: none;
+}
+
+.header>button.active {
+    display: block;
     width: 50px;
     height: 50px;
     font-size: 2em;
+    animation: fade-in 1s;
+}
+
+.header>button:not(.active).did-fade-in {
+    display: block;
+    width: 50px;
+    height: 50px;
+    font-size: 2em;
+    animation: fade-out 1s;
 }
 
 .index-container {
+    display: none;
+}
+
+.index-container.active {
     display: flex;
     justify-content: space-around;
     height: 50%;
+    animation: fade-in 1s;
+}
+
+.index-container:not(.active).did-fade-in {
+    display: flex;
+    height: 50%;
+    animation: fade-out 1s;
 }
 
 .index-container>button {
@@ -81,10 +106,46 @@ button {
     content: '\2754';
 }
 
+.help-container {
+    display: none;
+    overflow: hidden;
+}
+
+.help-container.active {
+    display: block;
+    text-align: center;
+}
+
+.help-container>p {
+    display: none;
+}
+
+.help-container>p.active {
+    display: block;
+    animation: help-in 1s;
+}
+
+.help-container>p:not(.active).did-fade-in {
+    display: block;
+    animation: help-out 1s;
+}
+
 .setup-container {
+    display: none;
+}
+
+.setup-container.active {
     display: flex;
     justify-content: space-around;
     height: 30%;
+    animation: fade-in 1s;
+}
+
+.setup-container:not(.active).did-fade-in {
+    display: flex;
+    justify-content: space-around;
+    height: 30%;
+    animation: fade-out 1s;
 }
 
 .setup-container button {
@@ -155,22 +216,43 @@ button {
     display: none;
 }
 
-@keyframes fadeOut {
-    0% {
+@keyframes fade-out {
+    from {
         opacity: 1;
     }
 
-    100% {
+    to {
         opacity: 0;
     }
 }
 
-@keyframes fadeIn {
-    0% {
+@keyframes fade-in {
+    from {
         opacity: 0;
     }
 
-    100% {
+    to {
         opacity: 1;
+    }
+}
+
+@keyframes help-in {
+    from {
+        transform: translate(0, 500px);
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes help-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(1000px, 0);
     }
 }

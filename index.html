@@ -11,9 +11,9 @@
 
 <body>
     <div class="header">
-        <button class="back-button hidden" onclick="back()">&#10232;</button>
+        <button class="back-button" onclick="back()">&#10232;</button>
         <h1 class="header-title">Nim</h1>
-        <button class="how-to-button hidden" onclick="help()">&#10068;</button>
+        <button class="how-to-button" onclick="help()">&#10068;</button>
     </div>
 
     <div class="index-container">
@@ -21,7 +21,17 @@
         <button class="how-to-button" onclick="help()"><span>How to</span></button>
     </div>
 
-    <div class="setup-container hidden">
+    <div class="help-container">
+        <p>This is help</p>
+        <p>For you</p>
+        <p>My friend</p>
+        <p>And I will</p>
+        <p>Help you win</p>
+        <p>This game</p>
+        <p>If you do as I say</p>
+    </div>
+
+    <div class="setup-container">
         <div class="player">
             <h2 class="player-title">Player</h2>
             <input type="text" placeholder="Input name">
@@ -30,7 +40,7 @@
 
         </div>
 
-        <button class="play-button">Play</button>
+        <button class="play-button" onclick="startGame()">Play</button>
 
         <div class="player">
             <h2 class="player-title">Player</h2>
@@ -41,10 +51,14 @@
         </div>
     </div>
 
+    <div class="game-container">
+
+    </div>
 
 
 
-    <script src="js/game.js"></script>
+
+    <script src="js\game.js"></script>
 </body>
 
 </html>
