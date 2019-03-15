@@ -1,5 +1,6 @@
 let stage = "index";
 let prevStage = "";
+let game;
 
 function toggleActive(e) {
     e.classList.contains("active") ? e.classList.remove("active") : e.classList.add("active");
@@ -14,8 +15,17 @@ function startGame() {
         }, 1000);
         stage = "setup";
     } else if (stage === "setup") {
-
+        initGame();
+        fadeSetupOut();
+        setTimeout(() => {
+            fadeGameIn();
+        }, 1000);
+        stage = "playing";
     }
+}
+
+function initGame() {
+    game = new Nim();
 }
 
 function back() {
@@ -40,8 +50,18 @@ function back() {
                 fadeSetupIn();
             }, 1000);
             stage = "setup";
+        } else if (prevStage === "playing") {
+            fadeHelpOut();
+            setTimeout(() => {
+                fadeGameIn();
+            }, 1000);
+            stage = "playing";
         }
     } else if (stage === "playing") {
+        fadeGameOut();
+        setTimeout(() => {
+            fadeSetupIn();
+        }, 1000);
         stage = "setup";
     }
 }
@@ -63,6 +83,10 @@ function help() {
         stage = "help";
         prevStage = "setup";
     } else if (stage === "playing") {
+        fadeGameOut();
+        setTimeout(() => {
+            fadeHelpIn();
+        }, 1000);
         stage = "help";
         prevStage = "playing";
     }
@@ -100,6 +124,16 @@ function fadeSetupIn() {
 function fadeSetupOut() {
     let setup = document.querySelector(".setup-container");
     toggleActive(document.querySelector(".setup-container"));
+}
+
+function fadeGameIn() {
+    let game = document.querySelector(".game-container");
+    toggleActive(document.querySelector(".game-container"));
+}
+
+function fadeGameOut() {
+    let game = document.querySelector(".game-container");
+    toggleActive(document.querySelector(".game-container"));
 }
 
 function fadeHelpIn() {

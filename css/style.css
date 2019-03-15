@@ -202,6 +202,80 @@ button {
     margin-top: auto;
 }
 
+.game-container {
+    display: none;
+}
+
+.game-container.active {
+    display: flex;
+    justify-content: space-around;
+    height: 50%;
+    animation: fade-in 1s;
+}
+
+.game-container:not(.active).did-fade-in {
+    display: flex;
+    justify-content: space-around;
+    height: 50%;
+    animation: fade-out 1s;
+}
+
+.player-container {
+    display: grid;
+    width: 20%;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1 1 1;
+    grid-template-rows: auto;
+    grid-template-areas: "title title title"
+        "minus amount plus"
+        "taken taken taken";
+    grid-column-gap: 10px;
+    grid-row-gap: 5px;
+}
+
+.player-container>button {
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    font-size: 4em;
+    background: white;
+    border: solid 2px #80c1b9;
+    transition: 0.5s;
+}
+
+.player-container>button:hover {
+    background: #80c1b9;
+}
+
+.player-container>.player-title {
+    grid-area: title;
+    text-align: center;
+    font-size: 3em;
+    color: #024b1d;
+}
+
+.player-container>.minus-button {
+    grid-area: minus;
+}
+
+.player-container>p {
+    grid-area: amount;
+    font-size: 3em;
+}
+
+.player-container>.plus-button {
+    grid-area: plus;
+}
+
+.player-container>div {
+    grid-area: taken;
+}
+
+.nim-container {
+    border: 1px solid red;
+    flex: 1;
+}
 
 
 
