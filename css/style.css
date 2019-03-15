@@ -264,6 +264,10 @@ button {
     font-size: 3em;
 }
 
+.player-container>p.shake {
+    animation: shake 1s;
+}
+
 .player-container>.plus-button {
     grid-area: plus;
 }
@@ -328,5 +332,24 @@ button {
 
     to {
         transform: translate(1000px, 0);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate(-1px);
+    }
+    20%, 80% {
+        transform: translate(2px);
+    }
+    30%, 70% {
+        transform: translate(-4px);
+    }
+    40%, 60% {
+        transform: translate(4px);
+    }
+    50% {
+        transform: translate(-4px);
+        color: red;
     }
 }

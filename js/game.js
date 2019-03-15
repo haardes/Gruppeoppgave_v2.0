@@ -26,6 +26,8 @@ function startGame() {
 
 function initGame() {
     game = new Nim();
+    document.querySelector(".player-container.player1>.player-title").innerHTML = game.player1.name;
+    document.querySelector(".player-container.player2>.player-title").innerHTML = game.player2.name;
 }
 
 function back() {

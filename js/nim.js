@@ -34,13 +34,19 @@ class Player {
     changeAmount(increase) {
         if (increase) {
             if (this.grabAmount >= game.maxGrab) {
-                console.log("Can't increase take-amount any more");
+                this.grabP.classList.add("shake");
+                setTimeout(() => {
+                    this.grabP.classList.remove("shake");
+                }, 1000);
             } else {
                 this.grabAmount++;
             }
         } else {
             if (this.grabAmount == 2) {
-                console.log("Can't decrease take-amount any more");
+                this.grabP.classList.add("shake");
+                setTimeout(() => {
+                    this.grabP.classList.remove("shake");
+                }, 1000);
             } else {
                 this.grabAmount--;
             }
