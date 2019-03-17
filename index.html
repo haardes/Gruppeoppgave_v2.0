@@ -32,31 +32,31 @@
     </div>
 
     <div class="setup-container">
-        <div class="player player1">
+        <div class="player-setup player1">
             <h2 class="player-title">Computer</h2>
             <input type="text" placeholder="Input name">
-            <button type="button">OK</button>
-            <button class="control-button" type="button">Controlled by player</button>
-
+            <button class="ok-button" onclick="game.player1.setName(this);">OK</button>
+            <button class="control-button" value=true onclick="game.player1.toggleHuman(this);">Controlled
+                by player</button>
         </div>
 
         <button class="play-button" onclick="startGame()">Play</button>
 
-        <div class="player player2">
+        <div class="player-setup player2">
             <h2 class="player-title">Computer</h2>
             <input type="text" placeholder="Input name">
-            <button type="button">OK</button>
-            <button class="control-button" type="button">Controlled by AI</button>
-
+            <button class="ok-button" onclick="game.player2.setName(this);">OK</button>
+            <button class="control-button" value=false onclick="game.player2.toggleHuman(this);">Controlled by
+                AI</button>
         </div>
     </div>
 
     <div class="game-container">
         <div class="player-container player1">
-            <h2 class="player-title">Fredrik</h2>
-            <button class="minus-button" onclick="game.player1.changeAmount(false);">-</button>
+            <h2 class="player-title">Player</h2>
+            <button class="minus-button" onclick="game.player1.changeAmount(false, this);">-</button>
             <p>2</p>
-            <button class="plus-button" onclick="game.player1.changeAmount(true);">+</button>
+            <button class="plus-button" onclick="game.player1.changeAmount(true, this);">+</button>
             <div class="taken-container">OOO</div>
         </div>
 
@@ -65,10 +65,10 @@
         </div>
 
         <div class="player-container player2">
-            <h2 class="player-title">Fredrik</h2>
-            <button class="minus-button" onclick="game.player2.changeAmount(false);">-</button>
+            <h2 class="player-title">Player</h2>
+            <button class="minus-button" onclick="game.player2.changeAmount(false, this);">-</button>
             <p>2</p>
-            <button class="plus-button" onclick="game.player2.changeAmount(true);">+</button>
+            <button class="plus-button" onclick="game.player2.changeAmount(true, this);">+</button>
             <div class="taken-container">OOO</div>
         </div>
     </div>

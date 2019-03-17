@@ -8,6 +8,7 @@ function toggleActive(e) {
 
 function startGame() {
     if (stage === "index") {
+        initNim();
         fadeIndexOut();
         fadeHeaderIn();
         setTimeout(() => {
@@ -15,21 +16,31 @@ function startGame() {
         }, 1000);
         stage = "setup";
     } else if (stage === "setup") {
-        initGame();
         fadeSetupOut();
         setTimeout(() => {
             fadeGameIn();
+            game.show();
         }, 1000);
         stage = "playing";
     }
 }
 
-function initGame() {
-    game = new Nim();
-    document.querySelector(".player-container.player1>.player-title").innerHTML = game.player1.name;
-    document.querySelector(".player-container.player2>.player-title").innerHTML = game.player2.name;
+function initNim() {
+    game = new Nim(40);
+    console.log("Starting");
+    game.player1 = new Player(
+        document.querySelector(".player-setup.player1>h2").innerText,
+        JSON.parse(document.querySelector(".player-setup.player1>.control-button").value)
+    );
+    game.player2 = new Player(
+        document.querySelector(".player-setup.player2>h2").innerText,
+        JSON.parse(document.querySelector(".player-setup.player2>.control-button").value)
+    );
 }
 
+/**
+ * TODO: Skriv om til switch, mye renere kode
+ */
 function back() {
     if (stage === "setup") {
         fadeSetupOut();
@@ -68,6 +79,9 @@ function back() {
     }
 }
 
+/**
+ * TODO: Skriv om til switch, mye renere kode
+ */
 function help() {
     if (stage === "index") {
         fadeIndexOut();
@@ -161,13 +175,13 @@ window.onload = function () {
 }
 
 document.addEventListener("animationstart", (e) => {
-    if (e.animationName === 'fade-in' || e.animationName === 'help-in') {
+    if (e.animationName === 'fade-in' || e.animationName === 'help-in' || e.animationName === 'fall-in') {
         e.target.classList.add('did-fade-in');
     }
 });
 
 document.addEventListener('animationend', function (e) {
-    if (e.animationName === 'fade-out' || e.animationName === 'help-out') {
+    if (e.animationName === 'fade-out' || e.animationName === 'help-out' || e.animationName === 'fall-out') {
         e.target.classList.remove('did-fade-in');
     }
 });
