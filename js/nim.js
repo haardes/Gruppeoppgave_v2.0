@@ -6,12 +6,17 @@ class Nim {
         this.player1;
         this.player2;
         this.turn;
+        this.won = false;
         this.balls = [];
         this.createBalls();
     }
 
-    victory() {
-
+    victory(loser) {
+        this.won = true;
+        let winner = (loser == this.player1) ? this.player2 : this.player1;
+        document.querySelector(".nim-container").innerText = `${loser.name} has lost the game.\nCongratulations to ${winner.name}!`;
+        document.querySelector(".pyro").classList.remove("hidden");
+        document.querySelector("body").style.backgroundColor = "#444";
     }
 
     createBalls() {
@@ -22,21 +27,45 @@ class Nim {
             container.appendChild(span);
             this.balls.push(span);
         }
+
         container.onclick = () => {
-            if (this.turn == this.player1 || this.turn == undefined) {
-                this.takeBalls(this.player1);
-                this.turn = this.player2;
-            } else {
-                this.takeBalls(this.player2);
-                this.turn = this.player1;
+            if (!this.won) {
+                if (this.turn == this.player1 || this.turn == undefined) {
+                    if (this.player1.takeBalls(document.querySelector(".player1>p"))) {
+                        this.turn = this.player2;
+                    }
+                } else {
+                    if (this.player2.takeBalls(document.querySelector(".player2>p"))) {
+                        this.turn = this.player1;
+                    }
+                }
+            }
+
+            if (!this.won) {
+                if (!this.turn.human) {
+                    if (this.turn == this.player1) {
+                        setTimeout(() => {
+                            this.turn.computerMove(document.querySelector(".player1>p"));
+                            this.turn = this.player2;
+                        }, 1000);
+                    } else {
+                        setTimeout(() => {
+                            this.turn.computerMove(document.querySelector(".player2>p"));
+                            this.turn = this.player1;
+                        }, 1000);
+                    }
+                }
             }
         }
     }
 
-    takeBalls(player) {
-        let amount = player.grabAmount;
+    removeBalls(amount) {
         for (let i = 0; i < amount; i++) {
             this.balls.pop().classList.remove("active");
+        }
+
+        if (this.balls.length == 0) {
+            this.victory(this.turn);
         }
     }
 
@@ -59,6 +88,40 @@ class Player {
         this.grabbed = 0;
     }
 
+    computerMove(element) {
+        let grabAmount = Math.floor(Math.random() * (game.maxGrab - (game.minGrab - 1))) + game.minGrab;
+        let target = game.minGrab;
+        if ((game.balls.length - target) <= game.maxGrab) {
+            grabAmount = game.balls.length - target;
+        } else if (grabAmount > game.balls.length) {
+            grabAmount = game.balls.length;
+        }
+        element.innerText = grabAmount;
+        this.grabAmount = grabAmount;
+        this.takeBalls(element);
+    }
+
+    takeBalls(element) {
+        if (this.grabAmount > game.balls.length) {
+            element.classList.add("shake");
+            setTimeout(() => {
+                element.classList.remove("shake");
+            }, 1000);
+            return false;
+        } else {
+            game.removeBalls(this.grabAmount);
+            this.grabbed += this.grabAmount;
+
+            for (let i = 0; i < this.grabAmount; i++) {
+                let span = document.createElement("span");
+                span.classList.add("nim-ball", "active");
+                element.nextElementSibling.nextElementSibling.appendChild(span);
+            }
+
+            return true;
+        }
+    }
+
     changeAmount(increase, element) {
         if (increase) {
             if (this.grabAmount >= game.maxGrab) {
@@ -71,7 +134,7 @@ class Player {
                 element.previousElementSibling.innerText = this.grabAmount;
             }
         } else {
-            if (this.grabAmount == game.minGrab) {
+            if (this.grabAmount <= game.minGrab) {
                 element.nextElementSibling.classList.add("shake");
                 setTimeout(() => {
                     element.nextElementSibling.classList.remove("shake");

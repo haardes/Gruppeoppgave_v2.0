@@ -33,7 +33,7 @@
 
     <div class="setup-container">
         <div class="player-setup player1">
-            <h2 class="player-title">Computer</h2>
+            <h2 class="player-title">Player 1</h2>
             <input type="text" placeholder="Input name">
             <button class="ok-button" onclick="game.player1.setName(this);">OK</button>
             <button class="control-button" value=true onclick="game.player1.toggleHuman(this);">Controlled
@@ -43,7 +43,7 @@
         <button class="play-button" onclick="startGame()">Play</button>
 
         <div class="player-setup player2">
-            <h2 class="player-title">Computer</h2>
+            <h2 class="player-title">Player 2</h2>
             <input type="text" placeholder="Input name">
             <button class="ok-button" onclick="game.player2.setName(this);">OK</button>
             <button class="control-button" value=false onclick="game.player2.toggleHuman(this);">Controlled by
@@ -53,24 +53,27 @@
 
     <div class="game-container">
         <div class="player-container player1">
-            <h2 class="player-title">Player</h2>
+            <h2 class="player-title">Player 1</h2>
             <button class="minus-button" onclick="game.player1.changeAmount(false, this);">-</button>
             <p>2</p>
             <button class="plus-button" onclick="game.player1.changeAmount(true, this);">+</button>
-            <div class="taken-container">OOO</div>
+            <div class="taken-container"></div>
         </div>
 
-        <div class="nim-container">
-
-        </div>
+        <div class="nim-container"></div>
 
         <div class="player-container player2">
-            <h2 class="player-title">Player</h2>
+            <h2 class="player-title">Player 2</h2>
             <button class="minus-button" onclick="game.player2.changeAmount(false, this);">-</button>
             <p>2</p>
             <button class="plus-button" onclick="game.player2.changeAmount(true, this);">+</button>
-            <div class="taken-container">OOO</div>
+            <div class="taken-container"></div>
         </div>
+    </div>
+
+    <div class="pyro hidden">
+        <div class="before"></div>
+        <div class="after"></div>
     </div>
 
     <script src="js\game.js"></script>

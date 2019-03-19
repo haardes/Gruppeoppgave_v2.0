@@ -26,8 +26,7 @@ function startGame() {
 }
 
 function initNim() {
-    game = new Nim(40);
-    console.log("Starting");
+    game = new Nim(14);
     game.player1 = new Player(
         document.querySelector(".player-setup.player1>h2").innerText,
         JSON.parse(document.querySelector(".player-setup.player1>.control-button").value)
