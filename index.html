@@ -17,36 +17,47 @@
     </div>
 
     <div class="index-container">
-        <button class="start-button" onclick="startGame()"><span>Start</span></button>
+        <button class="start-button" onclick="initGame()"><span>Start</span></button>
         <button class="how-to-button" onclick="help()"><span>How to</span></button>
     </div>
 
     <div class="help-container">
-        <p>This is help</p>
-        <p>For you</p>
-        <p>My friend</p>
-        <p>And I will</p>
-        <p>Help you win</p>
-        <p>This game</p>
-        <p>If you do as I say</p>
+        <p>Nim is a mathematical game of strategy in which two players take turns removing balls from a pile.</p>
+        <p>On each
+            turn, a player must remove at least one ball, and may remove any number of balls
+            provided it's less than or equal to the set amount of "max".</p>
+        <p>The goal of the game is to avoid taking the
+            last ball.</p>
+        <p>On the setup screen you can choose to play against another player, or against the computer. Set the "status"
+            of each player by clicking the "Controlled by" button.</p>
+        <p>You take balls from the game by clicking any ball on the screen.</p>
+        <p>The computer is NOT the smartest in the world, but be careful, he will try to force you into taking the last
+            ball.</p>
+        <p>Have fun playing this fun little game!</p>
     </div>
 
     <div class="setup-container">
         <div class="player-setup player1">
             <h2 class="player-title">Player 1</h2>
             <input type="text" placeholder="Input name">
-            <button class="ok-button" onclick="game.player1.setName(this);">OK</button>
-            <button class="control-button" value=true onclick="game.player1.toggleHuman(this);">Controlled
+            <button class="ok-button" onclick="player1.setName(this);">OK</button>
+            <button class="control-button" value=true onclick="player1.toggleHuman(this);">Controlled
                 by player</button>
         </div>
 
-        <button class="play-button" onclick="startGame()">Play</button>
+        <div class="game-setup">
+            <h2 class="max-grab-title">Max grab amount:</h2>
+            <button id="minus-grab" onclick="changeMaxGrab(false, this);">-</button>
+            <p>3</p>
+            <button id="plus-grab" onclick="changeMaxGrab(true, this);">+</button>
+            <button id="play-button" onclick="startGame()">Play</button>
+        </div>
 
         <div class="player-setup player2">
             <h2 class="player-title">Player 2</h2>
             <input type="text" placeholder="Input name">
-            <button class="ok-button" onclick="game.player2.setName(this);">OK</button>
-            <button class="control-button" value=false onclick="game.player2.toggleHuman(this);">Controlled by
+            <button class="ok-button" onclick="player2.setName(this);">OK</button>
+            <button class="control-button" value=false onclick="player2.toggleHuman(this);">Controlled by
                 AI</button>
         </div>
     </div>

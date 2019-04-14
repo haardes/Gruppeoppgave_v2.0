@@ -1,80 +1,102 @@
-let stage = "index";
-let prevStage = "";
-let game;
+let stage = "index",
+    prevStage = "",
+    game, player1, player2;
 
 function toggleActive(e) {
     e.classList.contains("active") ? e.classList.remove("active") : e.classList.add("active");
 }
 
+function initGame() {
+    initPlayers();
+    fadeIndex();
+    fadeHeader();
+    setTimeout(() => {
+        fadeSetup();
+    }, 1000);
+    stage = "setup";
+}
+
 function startGame() {
-    if (stage === "index") {
+    if (player1.name == "Computer" && player1.human == true) {
+        let errorP = document.createElement("p");
+        errorP.innerText = "Please set name of player 1";
+        document.body.appendChild(errorP);
+        setTimeout(() => document.body.removeChild(errorP), 2000);
+    } else if (player2.name == "Computer" && player2.human == true) {
+        let errorP = document.createElement("p");
+        errorP.innerText = "Please set name of player 2";
+        document.body.appendChild(errorP);
+        setTimeout(() => document.body.removeChild(errorP), 2000);
+    } else {
         initNim();
-        fadeIndexOut();
-        fadeHeaderIn();
+        fadeSetup();
         setTimeout(() => {
-            fadeSetupIn();
-        }, 1000);
-        stage = "setup";
-    } else if (stage === "setup") {
-        fadeSetupOut();
-        setTimeout(() => {
-            fadeGameIn();
+            fadeGame();
             game.show();
         }, 1000);
         stage = "playing";
     }
 }
 
-function initNim() {
-    game = new Nim(14);
-    game.player1 = new Player(
-        document.querySelector(".player-setup.player1>h2").innerText,
-        JSON.parse(document.querySelector(".player-setup.player1>.control-button").value)
-    );
-    game.player2 = new Player(
-        document.querySelector(".player-setup.player2>h2").innerText,
-        JSON.parse(document.querySelector(".player-setup.player2>.control-button").value)
-    );
+function initPlayers() {
+    player1 = new Player(JSON.parse(document.querySelector(".player-setup.player1>.control-button").value));
+    player2 = new Player(JSON.parse(document.querySelector(".player-setup.player2>.control-button").value));
 }
 
-/**
- * TODO: Skriv om til switch, mye renere kode
- */
+function initNim() {
+    game = new Nim(player1, player2, (loser) => {
+        let winner = (loser == game.player1) ? game.player2 : game.player1;
+        document.querySelector(".nim-container").innerText = `${loser.name} has lost the game.\nCongratulations to ${winner.name}!`;
+        document.querySelector(".pyro").classList.remove("hidden");
+        document.querySelector("body").style.backgroundColor = "#444";
+    }, 20, parseInt(document.querySelector(".game-setup>p").innerText));
+}
+
 function back() {
-    if (stage === "setup") {
-        fadeSetupOut();
-        fadeHeaderOut();
-        setTimeout(() => {
-            fadeIndexIn();
-        }, 1000);
-        stage = "index";
-    } else if (stage === "help") {
-        if (prevStage === "index") {
-            fadeHeaderOut();
-            fadeHelpOut();
+    switch (stage) {
+        case "setup":
+            fadeSetup();
+            fadeHeader();
             setTimeout(() => {
-                fadeIndexIn();
+                fadeIndex();
             }, 1000);
             stage = "index";
-        } else if (prevStage === "setup") {
-            fadeHelpOut();
+            break;
+
+        case "help":
+            switch (prevStage) {
+                case "index":
+                    fadeHeader();
+                    fadeHelp(true);
+                    setTimeout(() => {
+                        fadeIndex();
+                    }, 1000);
+                    break;
+
+                case "setup":
+                    fadeHelp(true);
+                    setTimeout(() => {
+                        fadeSetup();
+                    }, 1000);
+                    break;
+
+                case "playing":
+                    fadeHelp(true);
+                    setTimeout(() => {
+                        fadeGame();
+                    }, 1000);
+                    break;
+            }
+            stage = prevStage;
+            break;
+
+        case "playing":
+            fadeGame();
             setTimeout(() => {
-                fadeSetupIn();
+                fadeSetup();
             }, 1000);
             stage = "setup";
-        } else if (prevStage === "playing") {
-            fadeHelpOut();
-            setTimeout(() => {
-                fadeGameIn();
-            }, 1000);
-            stage = "playing";
-        }
-    } else if (stage === "playing") {
-        fadeGameOut();
-        setTimeout(() => {
-            fadeSetupIn();
-        }, 1000);
-        stage = "setup";
+            break;
     }
 }
 
@@ -82,95 +104,81 @@ function back() {
  * TODO: Skriv om til switch, mye renere kode
  */
 function help() {
-    if (stage === "index") {
-        fadeIndexOut();
-        fadeHeaderIn();
-        setTimeout(() => {
-            fadeHelpIn();
+    switch (stage) {
+        case "index":
+            fadeIndex();
+            fadeHeader();
+            setTimeout(() => {
+                fadeHelp();
+            }, 1000);
+            break;
+
+        case "setup":
+            fadeSetup();
+            setTimeout(() => {
+                fadeHelp();
+            }, 1000);
+            break;
+
+        case "playing":
+            fadeGame();
+            setTimeout(() => {
+                fadeHelp();
+            }, 1000);
+            break;
+    }
+
+    prevStage = stage;
+    stage = "help";
+}
+
+// Helper-functions just for clearer calling of animations. Could very well use "toggleActive" instead
+function fadeHeader() {
+    let headerButtons = document.querySelectorAll(".header>button");
+    headerButtons.forEach(button => {
+        toggleActive(button);
+    });
+}
+
+function fadeIndex() {
+    toggleActive(document.querySelector(".index-container"));
+}
+
+function fadeSetup() {
+    toggleActive(document.querySelector(".setup-container"));
+}
+
+function fadeGame() {
+    toggleActive(document.querySelector(".game-container"));
+}
+
+function fadeHelp(out) {
+    document.querySelectorAll(".help-container>p").forEach(el => {
+        toggleActive(el);
+    });
+
+    if (out) {
+        setTimeout(function () {
+            toggleActive(document.querySelector(".help-container"));
         }, 1000);
-        stage = "help";
-        prevStage = "index";
-    } else if (stage === "setup") {
-        fadeSetupOut();
-        setTimeout(() => {
-            fadeHelpIn();
-        }, 1000);
-        stage = "help";
-        prevStage = "setup";
-    } else if (stage === "playing") {
-        fadeGameOut();
-        setTimeout(() => {
-            fadeHelpIn();
-        }, 1000);
-        stage = "help";
-        prevStage = "playing";
+    } else {
+        toggleActive(document.querySelector(".help-container"));
     }
 }
 
-function fadeHeaderIn() {
-    let headerButtons = document.querySelectorAll(".header>button");
-    headerButtons.forEach(button => {
-        toggleActive(button);
-    });
-}
-
-function fadeHeaderOut() {
-    let headerButtons = document.querySelectorAll(".header>button");
-    headerButtons.forEach(button => {
-        toggleActive(button);
-    });
-}
-
-function fadeIndexIn() {
-    let index = document.querySelector(".index-container");
-    toggleActive(document.querySelector(".index-container"));
-}
-
-function fadeIndexOut() {
-    let index = document.querySelector(".index-container");
-    toggleActive(document.querySelector(".index-container"));
-}
-
-function fadeSetupIn() {
-    let setup = document.querySelector(".setup-container");
-    toggleActive(document.querySelector(".setup-container"));
-}
-
-function fadeSetupOut() {
-    let setup = document.querySelector(".setup-container");
-    toggleActive(document.querySelector(".setup-container"));
-}
-
-function fadeGameIn() {
-    let game = document.querySelector(".game-container");
-    toggleActive(document.querySelector(".game-container"));
-}
-
-function fadeGameOut() {
-    let game = document.querySelector(".game-container");
-    toggleActive(document.querySelector(".game-container"));
-}
-
-function fadeHelpIn() {
-    toggleActive(document.querySelector(".help-container"));
-    let helpEls = document.querySelectorAll(".help-container>p");
-    helpEls.forEach(el => {
-        toggleActive(el);
-    })
-}
-
-function fadeHelpOut() {
-    let helpEls = document.querySelectorAll(".help-container>p");
-    helpEls.forEach(el => {
-        toggleActive(el);
-    })
-    setTimeout(function () {
-        toggleActive(document.querySelector(".help-container"));
-    }, 1000);
-}
-
-window.onload = function () {
-    fadeIndexIn();
+function changeMaxGrab(increase, element) {
+    if (increase) {
+        element.previousElementSibling.innerText = parseInt(element.previousElementSibling.innerText) + 1;
+    } else {
+        if (parseInt(element.nextElementSibling.innerText) <= 1) {
+            element.nextElementSibling.classList.add("shake");
+            setTimeout(() => {
+                element.nextElementSibling.classList.remove("shake");
+            }, 1000);
+        } else {
+            element.nextElementSibling.innerText = parseInt(element.nextElementSibling.innerText) - 1;
+        }
+    }
 }
 
 document.addEventListener("animationstart", (e) => {
@@ -184,3 +192,7 @@ document.addEventListener('animationend', function (e) {
         e.target.classList.remove('did-fade-in');
     }
 });
+
+window.onload = function () {
+    fadeIndex();
+}
